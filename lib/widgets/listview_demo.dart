@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ListViewDemo extends StatelessWidget {
+class ListViewWidgetDemo extends StatelessWidget {
   @override 
   Widget build(BuildContext context) {
     return Scaffold(

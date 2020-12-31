@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demos/pages/text_demo.dart';
-import 'package:flutter_demos/pages/container_demo.dart';
-import 'package:flutter_demos/pages/image_demo.dart';
-import 'package:flutter_demos/pages/decoratedbox_demo.dart';
-import 'package:flutter_demos/pages/listview_demo.dart';
-
+import 'package:flutter_demos/widgets/text_demo.dart';
+import 'package:flutter_demos/widgets/container_demo.dart';
+import 'package:flutter_demos/widgets/image_demo.dart';
+import 'package:flutter_demos/widgets/decoratedbox_demo.dart';
+import 'package:flutter_demos/widgets/listview_demo.dart';
+import 'package:flutter_demos/widgets/gridview_demo.dart';
+import 'package:flutter_demos/widgets/table_demo.dart';
+import 'package:flutter_demos/widgets/flow_demo.dart';
 void main() => runApp(App());
 
 class App extends StatelessWidget {
@@ -13,12 +15,18 @@ class App extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/': (context) => Home(),
-        '/textDemo': (context) => TextDemo(),
-        '/containerDemo': (context) => ContainerDemo(),
-        '/imageDemo': (context) => ImageDemo(),
-        '/decoratedBoxDemo': (context) => DecoratedBoxDemo(),
-        '/listViewDemo': (context) => ListViewDemo(),
+        '/textWidgetDemo': (context) => TextWidgetDemo(),
+        '/containerWidgetDemo': (context) => ContainerWidgetDemo(),
+        '/imageWidgetDemo': (context) => ImageWidgetDemo(),
+        '/decoratedBoxWidgetDemo': (context) => DecoratedBoxWidgetDemo(),
+        '/listViewWidgetDemo': (context) => ListViewWidgetDemo(),
+        '/gridViewWidgetDemo': (context) => GridViewWidgetDemo(),
+        '/tableWidgetDemo': (context) => TableWidgetDemo(),
+        '/flowWidgetDemo': (context) => FlowWidgetDemo(),
       },
+      // initialRoute: '/textWidgetDemo',
+      debugShowMaterialGrid: false,
+      debugShowCheckedModeBanner: false
     );
   }
 }
@@ -33,33 +41,51 @@ class Home extends StatelessWidget {
       body: ListView(
         children: [
           RaisedButton(
-            child: Text('Text Demo'),
+            child: Text('Text Widget Demo'),
             onPressed: () {
-              Navigator.pushNamed(context, '/textDemo');
+              Navigator.pushNamed(context, '/textWidgetDemo');
             },
           ),
           RaisedButton(
-            child: Text('Container Demo'),
+            child: Text('Container Widget Demo'),
             onPressed: () {
-              Navigator.pushNamed(context, '/containerDemo');
+              Navigator.pushNamed(context, '/containerWidgetDemo');
             },
           ),
           RaisedButton(
-            child: Text('Image Demo'),
+            child: Text('Image Widget Demo'),
             onPressed: () {
-              Navigator.pushNamed(context, '/imageDemo');
+              Navigator.pushNamed(context, '/imageWidgetDemo');
             },
           ),
           RaisedButton(
-            child: Text('DecoratedBox Demo'),
+            child: Text('DecoratedBox Widget Demo'),
             onPressed: () {
-              Navigator.pushNamed(context, '/decoratedBoxDemo');
+              Navigator.pushNamed(context, '/decoratedBoxWidgetDemo');
             },
           ),
           RaisedButton(
-            child: Text('ListView Demo'),
+            child: Text('ListView Widget Demo'),
             onPressed: () {
-              Navigator.pushNamed(context, '/listViewDemo');
+              Navigator.pushNamed(context, '/listViewWidgetDemo');
+            },
+          ),
+          RaisedButton(
+            child: Text('GridView Widget Demo'),
+            onPressed: () {
+              Navigator.pushNamed(context, '/gridViewWidgetDemo');
+            },
+          ),
+          RaisedButton(
+            child: Text('Table Widget Demo'),
+            onPressed: () {
+              Navigator.pushNamed(context, '/tableWidgetDemo');
+            },
+          ),
+          RaisedButton(
+            child: Text('Flow Widget Demo'),
+            onPressed: () {
+              Navigator.pushNamed(context, '/flowWidgetDemo');
             },
           ),
         ],

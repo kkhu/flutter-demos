@@ -42,7 +42,7 @@ import 'package:flutter/material.dart';
 
 */
 
-class DecoratedBoxDemo extends StatelessWidget {
+class DecoratedBoxWidgetDemo extends StatelessWidget {
   @override 
   Widget build(BuildContext context) {
     return Scaffold(

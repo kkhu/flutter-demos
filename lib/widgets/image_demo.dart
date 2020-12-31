@@ -17,7 +17,7 @@ Image
 
 */
 
-class ImageDemo extends StatelessWidget {
+class ImageWidgetDemo extends StatelessWidget {
   @override 
   Widget build(BuildContext context) {
     return Scaffold(

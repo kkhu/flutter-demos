@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 
 */
 
-class ContainerDemo extends StatelessWidget {
+class ContainerWidgetDemo extends StatelessWidget {
   @override 
   Widget build(BuildContext context) {
     return Scaffold(
