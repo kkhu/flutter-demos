@@ -7,6 +7,9 @@ import 'package:flutter_demos/widgets/listview_demo.dart';
 import 'package:flutter_demos/widgets/gridview_demo.dart';
 import 'package:flutter_demos/widgets/table_demo.dart';
 import 'package:flutter_demos/widgets/flow_demo.dart';
+import 'package:flutter_demos/widgets/button_demo.dart';
+import 'package:flutter_demos/widgets/form_demo.dart';
+
 void main() => runApp(App());
 
 class App extends StatelessWidget {
@@ -23,6 +26,8 @@ class App extends StatelessWidget {
         '/gridViewWidgetDemo': (context) => GridViewWidgetDemo(),
         '/tableWidgetDemo': (context) => TableWidgetDemo(),
         '/flowWidgetDemo': (context) => FlowWidgetDemo(),
+        '/buttonWidgetDemo': (context) => ButtonWidgetDemo(),
+        '/formWidgetDemo': (context) => FormWidgetDemo(),
       },
       // initialRoute: '/textWidgetDemo',
       debugShowMaterialGrid: false,
@@ -39,6 +44,7 @@ class Home extends StatelessWidget {
         title: Text('Home'),
       ),
       body: ListView(
+        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
         children: [
           RaisedButton(
             child: Text('Text Widget Demo'),
@@ -86,6 +92,18 @@ class Home extends StatelessWidget {
             child: Text('Flow Widget Demo'),
             onPressed: () {
               Navigator.pushNamed(context, '/flowWidgetDemo');
+            },
+          ),
+          RaisedButton(
+            child: Text('Button Widget Demo'),
+            onPressed: () {
+              Navigator.pushNamed(context, '/buttonWidgetDemo');
+            },
+          ),
+           RaisedButton(
+            child: Text('Form Widget Demo'),
+            onPressed: () {
+              Navigator.pushNamed(context, '/formWidgetDemo');
             },
           ),
         ],
