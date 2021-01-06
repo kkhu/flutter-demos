@@ -2,17 +2,52 @@ import 'package:flutter/material.dart';
 
 /*
 
-Form表单组件  
+## Form表单组件  
 文本框
+  TextFormField()
+
 密码框
+  TextFormField(
+    obscureText: true,
+  )
+
 单选框
+  Radio(
+    value: Gender.male,
+  ),
+
 复选框
+  Checkbox(
+    value: false
+  )
+
 下拉列表
+  PopupMenuButton<WhyFarther>(
+    // 占位显示
+    child: Container(
+      child: Text('请选择'),
+    ), 
+    initialValue: WhyFarther.bjs, // 下拉列表默认值
+    // 下拉列表
+    itemBuilder: (BuildContext context) => <PopupMenuEntry<WhyFarther>>[
+      const PopupMenuItem<WhyFarther>(
+        value: WhyFarther.gds,
+        child: Text('广东省'),
+      ),
+      const PopupMenuItem<WhyFarther>(
+        value: WhyFarther.hns,
+        child: Text('湖南省'),
+      ),
+    ],
+  ),
 
 
-
+## 表单设置
 最大长度
 maxLength
+
+电话号码键盘
+keyboardType: TextInputType.phone,
 
 密码框
 obscureText: true
@@ -28,14 +63,18 @@ class FormWidgetDemo extends StatefulWidget {
 }
 
 enum Gender { male, female }
+
+// This is the type used by the popup menu below.
+enum WhyFarther { gds, hns, hbs, bjs }
+
 class _FormWidgetDemo extends State<FormWidgetDemo> {
   
   GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   String username = '';
-  String phone;
+  String _phone;
   String password;
-
   Gender _gender = Gender.male;
+  WhyFarther _selection = WhyFarther.gds;
 
   final formController = TextEditingController();
 
@@ -67,20 +106,17 @@ class _FormWidgetDemo extends State<FormWidgetDemo> {
   submit() {
     var form = formKey.currentState;
     form.save();
-
-    // return showDialog(
-    //   context: context,
-    //   builder: (context) {
-    //     return AlertDialog(
-    //       // Retrieve the text the user has entered by using the
-    //       // TextEditingController.
-    //       content: Text('hahaha... $username'),
-    //     );
-    //   },
-    // );
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          // Retrieve the text the user has entered by using the
+          // TextEditingController.
+          content: Text('username=$username gender=$_gender phone=$_phone password=$password city=$_selection'),
+        );
+      },
+    );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -102,13 +138,10 @@ class _FormWidgetDemo extends State<FormWidgetDemo> {
                 ),
               )
             ),
+            // UserName
             Row(
               children: [
-                Container(
-                  width: 80,
-                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Text('UserName:'),
-                ),
+                FormItemLabel('UserName:'),
                 Expanded(
                   child:  Container(
                     width: double.infinity,
@@ -140,13 +173,10 @@ class _FormWidgetDemo extends State<FormWidgetDemo> {
                 ),
               ],
             ),
+            // Gender
             Row(
               children: [
-                Container(
-                  width: 80,
-                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Text('Gender:'),
-                ),
+                FormItemLabel('Gender:'),
                 Expanded(
                   child: Row(children: [
                     Radio(
@@ -173,13 +203,10 @@ class _FormWidgetDemo extends State<FormWidgetDemo> {
                 )
               ],
             ),
+            // Phone
             Row(
               children: [
-                Container(
-                  width: 80,
-                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Text('Phone:'),
-                ),
+                FormItemLabel('Phone:'),
                 Expanded(
                   child:  Container(
                     width: double.infinity,
@@ -191,14 +218,14 @@ class _FormWidgetDemo extends State<FormWidgetDemo> {
                         border: UnderlineInputBorder(),
                       ),
                       // autofocus: true,
-                      keyboardType: TextInputType.phone,
-                      maxLength: 11,
+                      keyboardType: TextInputType.phone, // 手机号码输入键盘
+                      maxLength: 11,  // 最大可输入长度
                       onSaved: (value) {
                         
                       },
                       onFieldSubmitted: (value) {
                         setState(() {
-                          phone = value;
+                          _phone = value;
                         });
                       },
                     ),
@@ -206,26 +233,23 @@ class _FormWidgetDemo extends State<FormWidgetDemo> {
                 ),
               ],
             ),
+            // Password
             Row(
               children: [
-                Container(
-                  width: 80,
-                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Text('Password:'),
-                ),
+                FormItemLabel('Password:'),
                 Expanded(
                   child:  Container(
                     width: double.infinity,
                     height: 50,
                     child:  TextFormField(
                       decoration: InputDecoration(
-                        hintText: 'Please enter your password',
-                        // border: OutlineInputBorder(),
-                        border: UnderlineInputBorder(),
+                        hintText: 'Please enter your password', // 占位提示语
+                        // border: OutlineInputBorder(), // 外边框线
+                        border: UnderlineInputBorder(), // 下划线边框
                       ),
-                      obscureText: true,
-                      obscuringCharacter: '*',
-                      maxLength: 20,
+                      obscureText: true, // 密码
+                      obscuringCharacter: '*', // 密码符
+                      maxLength: 20, // 最大可输入长度
                       onChanged: (value) {
                         // password = value;
                       },
@@ -242,6 +266,81 @@ class _FormWidgetDemo extends State<FormWidgetDemo> {
                 ),
               ],
             ),
+            // City
+            Row(
+              children: [
+                FormItemLabel('City:'),
+                Container(
+                  width: 200,
+                  child: PopupMenuButton<WhyFarther>(
+                    shape: RoundedRectangleBorder(), // 下拉列表形状
+                    // color: Colors.blue, // 下拉列表背景颜色
+                    // 选择回调
+                    onSelected: (WhyFarther result) { setState(() { _selection = result; }); },
+                    // 占位显示
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                          width: 1,
+                        ),
+                      ),
+                      child: Text('请选择'),
+                    ), 
+                    initialValue: WhyFarther.bjs, // 下拉列表默认值
+                    // 下拉列表
+                    itemBuilder: (BuildContext context) => <PopupMenuEntry<WhyFarther>>[
+                      const PopupMenuItem<WhyFarther>(
+                        value: WhyFarther.gds,
+                        child: Text('广东省'),
+                      ),
+                      const PopupMenuItem<WhyFarther>(
+                        value: WhyFarther.hns,
+                        child: Text('湖南省'),
+                      ),
+                      const PopupMenuItem<WhyFarther>(
+                        value: WhyFarther.hbs,
+                        child: Text('湖北省'),
+                      ),
+                      const PopupMenuItem<WhyFarther>(
+                        value: WhyFarther.bjs,
+                        child: Text('北京市'),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+            // Hobbies
+            Row(
+              children: [
+                FormItemLabel('hobbies:'),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        activeColor: Colors.blue, // 选中时的背景颜色
+                        checkColor: Colors.white, // 选中时勾的颜色
+                        value: true, // 是否选中
+                        onChanged: (value) {},
+                      ),
+                      Text('song'),
+                      Checkbox(
+                        value: false,
+                        onChanged: (value) {},
+                      ),
+                      Text('cate'),
+                      Checkbox(
+                        value: false,
+                        onChanged: (value) {},
+                      ),
+                      Text('travel'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             Padding(
               padding: EdgeInsets.all(10),
               child: ElevatedButton(
@@ -252,20 +351,35 @@ class _FormWidgetDemo extends State<FormWidgetDemo> {
                 child: Text('Submit'),
               ),
             ),
-            Container(
-              margin: EdgeInsets.fromLTRB(20, 50, 10, 0),
-              alignment: Alignment.topLeft,
-              child: Column(
-                children: [
-                  Text('username: $username'),
-                  Text('phone   : $phone'),
-                  Text('password: $password'),
-                ],
-              ),
-            )
+            // Container(
+            //   margin: EdgeInsets.fromLTRB(20, 50, 10, 0),
+            //   alignment: Alignment.topLeft,
+            //   child: Column(
+            //     children: [
+            //       Text('username: $username'),
+            //       Text('phone   : $phone'),
+            //       Text('password: $password'),
+            //     ],
+            //   ),
+            // )
           ],
         )
       ),
+    );
+  }
+}
+
+// 表单元素Label
+class FormItemLabel extends StatelessWidget {
+  final String name;
+  FormItemLabel(this.name);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 80,
+      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+      child: Text(name), 
     );
   }
 }
